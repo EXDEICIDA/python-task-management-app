@@ -5,3 +5,5 @@ clean car
 read a book
 go to the bathroom
 drink a tea
+ Make soup
+eat a pizza

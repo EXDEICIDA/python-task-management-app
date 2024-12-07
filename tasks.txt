@@ -1,7 +1,7 @@
 drink
-throw
+show
 eat a meal
-drink
-eat
-go
-fix the car
+clean car
+read a book
+go to the bathroom
+drink a tea

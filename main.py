@@ -2,7 +2,7 @@ while True:
     user_action = input("Type add, show, edit, complete or exit: ")
     user_action = user_action.strip()
 
-    if 'add' in user_action:
+    if user_action.startswith("add"):
         todo = user_action[4:]
 
         with open('tasks.txt', 'r') as file:
@@ -12,7 +12,7 @@ while True:
         with open('tasks.txt', 'w') as file:
             file.writelines(todos)
 
-    elif 'show' in user_action:
+    elif user_action.startswith("show"):
         with open('tasks.txt', 'r') as file:
             todos = file.readlines()
 
@@ -21,34 +21,44 @@ while True:
             row = f"{index + 1} - {item}"
             print(row)
 
-    elif 'edit' in user_action:
-        number = int(input("Number of the task to edit: ")) - 1
+    elif user_action.startswith("edit"):
+        try:
+            number = int(user_action[5:])
+            print(number)
+            number = number - 1
 
-        with open('tasks.txt', 'r') as file:
-            todos = file.readlines()
+            with open('tasks.txt', 'r') as file:
+                todos = file.readlines()
 
-        new_todo = input("Enter a new todo: ")
-        todos[number] = new_todo + '\n'
+            new_todo = input("Enter a new todo: ")
+            todos[number] = new_todo + '\n'
 
-        with open('tasks.txt', 'w') as file:
-            file.writelines(todos)
+            with open('tasks.txt', 'w') as file:
+                file.writelines(todos)
+        except ValueError:
+              print("Invalid input")
+              continue
 
-    elif 'complete' in user_action:
-        number = int(input("Number of the task to complete: ")) - 1
 
-        with open('tasks.txt', 'r') as file:
-            todos = file.readlines()
+    elif user_action.startswith("complete"):
+        try:
+            number = int(user_action[9:])
 
-        todo_to_remove = todos[number].strip('\n')
-        todos.pop(number)
+            with open('tasks.txt', 'r') as file:
+                todos = file.readlines()
+            index = number - 1
+            todo_to_remove = todos[index].strip('\n')
+            todos.pop(index)
 
-        with open('tasks.txt', 'w') as file:
-            file.writelines(todos)
+            with open('tasks.txt', 'w') as file:
+                file.writelines(todos)
 
-        message = f"Task number {number + 1}, {todo_to_remove}, has been completed."
-        print(message)
+            message = f"Task number {number - 1}, {todo_to_remove}, has been completed."
+            print(message)
+        except IndexError:
+            print("There is no task with that number to remove")
 
-    elif 'exit' in user_action:
+    elif user_action.startswith('exit'):
         break
 
     else:

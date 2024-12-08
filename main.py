@@ -1,9 +1,16 @@
-# A function definition
-def get_todos():
-    with open('tasks.txt', 'r') as file:
-         todos = file.readlines()
+# function definition: Getting Tasks
+def get_todos(filepath="tasks.txt"):
+    with open(filepath, 'r') as file_local:
+        todos_local = file_local.readlines()
 
-    return todos
+    return todos_local
+
+# A function for writing tasks
+
+
+def write_todos(todos_arg, filepath="tasks.txt"):
+    with open(filepath, 'w') as file:
+        file.writelines(todos_arg)
 
 
 while True:
@@ -16,9 +23,8 @@ while True:
         todos = get_todos()
 
         todos.append(todo + '\n')
-        with open('tasks.txt', 'w') as file:
-            file.writelines(todos)
 
+        write_todos(todos)
     elif user_action.startswith("show"):
 
         todos = get_todos()
@@ -39,12 +45,10 @@ while True:
             new_todo = input("Enter a new todo: ")
             todos[number] = new_todo + '\n'
 
-            with open('tasks.txt', 'w') as file:
-                file.writelines(todos)
+            write_todos("tasks.txt", todos)
         except ValueError:
-              print("Invalid input")
-              continue
-
+            print("Invalid input")
+            continue
 
     elif user_action.startswith("complete"):
         try:
@@ -55,8 +59,7 @@ while True:
             todo_to_remove = todos[index].strip('\n')
             todos.pop(index)
 
-            with open('tasks.txt', 'w') as file:
-                file.writelines(todos)
+            write_todos("tasks.txt", todos)
 
             message = f"Task number {number - 1}, {todo_to_remove}, has been completed."
             print(message)

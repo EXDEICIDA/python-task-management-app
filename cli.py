@@ -1,4 +1,9 @@
 import functions
+import time
+
+
+timeNow = time.strftime("%b %d, %Y %H:%M:%S")
+print("It is", timeNow)
 while True:
     user_action = input("Type add, show, edit, complete or exit: ")
     user_action = user_action.strip()
@@ -10,7 +15,7 @@ while True:
 
         todos.append(todo + '\n')
 
-        functions.write_todos(functions.todos)
+        functions.write_todos(todos)
     elif user_action.startswith("show"):
 
         todos = functions.get_todos()
